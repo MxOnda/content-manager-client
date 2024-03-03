@@ -37,12 +37,13 @@ export const ChangeProfilePicture = () => {
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
+    const currentUserId = JSON.parse(localStorage.getItem("current-user") as string).id;
 
     const formData = new FormData();
 
     formData.append("profile-picture", file);
 
-    const response = await mutation.mutateAsync({ file: formData, userId: "504e1f27-288b-4946-a7e3-a9c47f02c2cb" });
+    const response = await mutation.mutateAsync({ file: formData, userId: currentUserId });
 
     if (response.status && ![200, 201].includes(response.status)) {
       toast({
